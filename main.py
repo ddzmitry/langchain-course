@@ -1,7 +1,9 @@
 from dotenv import load_dotenv
 from langchain_core.prompts import PromptTemplate
-from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
+from pydantic import BaseModel, Field
 
 load_dotenv()
 
@@ -31,11 +33,35 @@ Musk's political activities, views, and statements have made him a polarizing fi
     )
 
     # llm = ChatOllama(temperature=0, model="gemma3:270m")
+    # llm = ChatGoogleGenerativeAI(model="gemini-3-pro-preview", project_id="")
     llm = ChatOpenAI(temperature=0, model="gpt-5")
     chain = summary_prompt_template | llm
 
     response = chain.invoke(input={"information": information})
     print(response.content)
+
+    count_letters_template = (
+        "given summary {summary} your job is to count letters, words , verbs and nounts"
+    )
+    count_letters_prompt_template = PromptTemplate(
+        input_variables=["summary"], template=count_letters_template
+    )
+    summary = response.content
+
+    class Verbage(BaseModel):
+        """count by word type"""
+
+        verbs: int = Field(description="verbs: int")
+        ajectives: int = Field(description="ajectives: in")
+        nouns: int = Field(description="nouns: int")
+
+    structured_llm = llm.with_structured_output(Verbage)
+    chain_counts = count_letters_prompt_template | structured_llm
+
+    response_counts = chain_counts.invoke(input={"summary": summary})
+    print("================================")
+    print(response_counts.model_dump_json())
+
 
 if __name__ == "__main__":
     main()
