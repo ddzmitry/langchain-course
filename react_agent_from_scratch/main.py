@@ -32,6 +32,8 @@ from ollama import Tool
 # Actually load environment variables now so API keys and settings are available.
 load_dotenv()
 
+from callback import AgentCallbackHandler
+
 
 # Declare a simple tool that returns the length of a given text.
 @tool
@@ -132,7 +134,9 @@ if __name__ == "__main__":
     # Create a ChatOpenAI LLM instance with deterministic behavior.
     # stop instructs the model to stop when it outputs "Observation" to allow tool handling.
     llm = ChatOpenAI(
-        temperature=0, stop=["\nObservation", "Observation"]
+        temperature=0,
+        stop=["\nObservation", "Observation"],
+        callbacks=[AgentCallbackHandler()],
     )  # Stop at Observation to allow for multi-step reasoning , Observation is a result of the tool call
 
     # Build the "chain" / agent pipeline:
