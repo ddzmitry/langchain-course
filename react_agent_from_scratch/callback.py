@@ -1,6 +1,7 @@
+from typing import Any, Dict, List, Tuple
+
 from langchain_classic.callbacks.base import BaseCallbackHandler
 from langchain_classic.schema import AgentAction, AgentFinish, LLMResult
-from typing import Any, Dict, List, Tuple
 
 
 class AgentCallbackHandler(BaseCallbackHandler):

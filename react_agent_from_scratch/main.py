@@ -2,11 +2,20 @@
 # Detailed, line-by-line documentation for the agent in this file.
 # Each comment explains the purpose of the following line(s) concisely.
 
+# Type hints for lists, tuples, unions.
+from typing import List, Tuple, Union
+
 # Load environment variables from a .env file into the process environment.
 from dotenv import load_dotenv
 
 # Decorator to mark a function as a tool usable by the agent.
 from langchain.tools import tool
+
+# Parser that converts ReAct-style single-input agent outputs into actions/finishes.
+from langchain_classic.agents.output_parsers import ReActSingleInputOutputParser
+
+# AgentAction and AgentFinish represent agent decisions and final outputs.
+from langchain_classic.schema import AgentAction, AgentFinish
 
 # PromptTemplate builds prompt text with slots and supports partial application.
 from langchain_core.prompts import PromptTemplate
@@ -16,15 +25,6 @@ from langchain_core.tools.render import render_text_description
 
 # OpenAI chat model wrapper provided by langchain.
 from langchain_openai import ChatOpenAI
-
-# Parser that converts ReAct-style single-input agent outputs into actions/finishes.
-from langchain_classic.agents.output_parsers import ReActSingleInputOutputParser
-
-# Type hints for lists, tuples, unions.
-from typing import List, Tuple, Union
-
-# AgentAction and AgentFinish represent agent decisions and final outputs.
-from langchain_classic.schema import AgentAction, AgentFinish
 
 # Tool type from ollama, used to represent tools in the tools list.
 from ollama import Tool

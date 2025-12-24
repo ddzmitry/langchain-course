@@ -5,7 +5,6 @@ load_dotenv()
 from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
 from langchain_tavily import TavilySearch
-
 from schemas import AgentResponse
 
 tools = [TavilySearch()]
