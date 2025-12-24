@@ -1,11 +1,12 @@
 from dotenv import load_dotenv
 
 load_dotenv()
+from typing import List
+
 from langchain.agents import create_agent
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import AIMessage, HumanMessage
 from langchain_openai import ChatOpenAI
 from langchain_tavily import TavilySearch
-from typing import List
 from pydantic import BaseModel, Field
 
 
