@@ -153,44 +153,34 @@ if __name__ == "__main__":
         | llm
         | ReActSingleInputOutputParser()
     )
-
-    # Invoke the agent once to get the first decision (action or final answer).
-    agent_step: Union[AgentAction, AgentFinish] = agent.invoke(
-        {
-            "input": "What is the length of 'DOG' in characters?",
-            "agent_scratchpad": intermediate_steps,
-        }
-    )
-    # At this point agent_step is either an AgentAction requiring a tool call,
-    # or an AgentFinish which contains the final answer.
-
-    # If the agent decided to call a tool, handle that tool invocation:
-    if isinstance(agent_step, AgentAction):
-        # Extract the tool name selected by the agent.
-        tool_name = agent_step.tool
-        # Extract the tool input the agent provided.
-        tool_input = agent_step.tool_input
-        # Resolve the tool object by name from our tools list.
-        tool_to_call = find_tool_by_name(tools, tool_name)
-        # Call the tool function with the provided input and capture the observation.
-        observation = tool_to_call.func(tool_input)
-        # Print the observation for visibility.
-        print(f"Observation from tool: {observation}")
-        # Append the action and observation so the next LLM call has context.
-        intermediate_steps.append([agent_step, str(observation)])
-
-        # Invoke the agent again now that we have the tool observation to continue reasoning.
+    agent_step = ""
+    while not isinstance(agent_step, AgentFinish):
+        # Invoke the agent once to get the first decision (action or final answer).
         agent_step: Union[AgentAction, AgentFinish] = agent.invoke(
             {
                 "input": "What is the length of 'DOG' in characters?",
                 "agent_scratchpad": intermediate_steps,
             }
         )
-        # Print the agent's subsequent output (either next action or final answer).
-        # print(agent_step)
+        # At this point agent_step is either an AgentAction requiring a tool call,
+        # or an AgentFinish which contains the final answer.
 
-    # If the agent already finished in the first step, print the final answer.
-    elif isinstance(agent_step, AgentFinish):
+        # If the agent decided to call a tool, handle that tool invocation:
+        if isinstance(agent_step, AgentAction):
+            # Extract the tool name selected by the agent.
+            tool_name = agent_step.tool
+            # Extract the tool input the agent provided.
+            tool_input = agent_step.tool_input
+            # Resolve the tool object by name from our tools list.
+            tool_to_call = find_tool_by_name(tools, tool_name)
+            # Call the tool function with the provided input and capture the observation.
+            observation = tool_to_call.func(tool_input)
+            # Print the observation for visibility.
+            print(f"Observation from tool: {observation}")
+            # Append the action and observation so the next LLM call has context.
+            intermediate_steps.append([agent_step, str(observation)])
+        # If the agent already finished in the first step, print the final answer.
+    if isinstance(agent_step, AgentFinish):
         print("THE END====")
         print(f"Final answer: {agent_step.return_values['output']}")
-    # End of script: either printed the tool-driven observation flow or final answer.
+        # End of script: either printed the tool-driven observation flow or final answer.
