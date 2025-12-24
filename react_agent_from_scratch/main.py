@@ -158,7 +158,7 @@ if __name__ == "__main__":
         # Invoke the agent once to get the first decision (action or final answer).
         agent_step: Union[AgentAction, AgentFinish] = agent.invoke(
             {
-                "input": "What is the length of 'DOG' in characters?",
+                "input": "What is the length of 'strawberry' in characters?",
                 "agent_scratchpad": intermediate_steps,
             }
         )
