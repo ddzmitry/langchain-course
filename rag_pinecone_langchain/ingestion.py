@@ -10,7 +10,7 @@ load_dotenv()
 
 if __name__ == "__main__":
     print("Ingesting...")
-    loader = TextLoader("./rag_pinecone/mediumblog1.txt")
+    loader = TextLoader("./rag_pinecone_langchain/mediumblog1.txt")
     document = loader.load()
 
     print("splitting...")
