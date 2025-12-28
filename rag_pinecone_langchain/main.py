@@ -1,3 +1,4 @@
+import asyncio
 import os
 from operator import itemgetter
 
@@ -55,7 +56,7 @@ def retrieval_chain_without_lcel(query: str):
     """
     # Step 1: Retrieve relevant documents
     docs = retriever.invoke(query)
-
+    print(f"Retrieved {len(docs)} documents.")
     # Step 2: Format documents into context string
     context = format_docs(docs)
 
@@ -138,7 +139,11 @@ if __name__ == "__main__":
     print("- Better for production use")
     print("=" * 70)
 
-    chain_with_lcel = create_retrieval_chain_with_lcel()
-    result_with_lcel = chain_with_lcel.invoke({"question": query})
-    print("\nAnswer:")
-    print(result_with_lcel)
+    async def stream_response():
+        chain_with_lcel = create_retrieval_chain_with_lcel()
+        print("\nAnswer:")
+        async for chunk in chain_with_lcel.astream({"question": query}):
+            print(chunk, end="", flush=True)
+        print()  # New line at the end
+
+    asyncio.run(stream_response())
