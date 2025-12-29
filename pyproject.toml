@@ -44,4 +44,5 @@ dependencies = [
 [tool.uv.workspace]
 members = [
     "doc-helper",
+    "langgraph_react",
 ]

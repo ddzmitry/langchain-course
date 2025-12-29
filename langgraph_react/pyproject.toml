@@ -1,0 +1,17 @@
+[project]
+name = "langgraph-react"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "certifi>=2025.11.12",
+    "langchain-course",
+    "langchain-tavily>=0.2.15",
+    "langgraph-cli[inmem]>=0.4.11",
+    "pandas>=2.3.3",
+    "rich>=14.2.0",
+]
+
+[tool.uv.sources]
+langchain-course = { workspace = true }
