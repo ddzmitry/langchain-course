@@ -45,4 +45,5 @@ dependencies = [
 members = [
     "doc-helper",
     "langgraph_react",
+    "langgraph_reflection_agent",
 ]

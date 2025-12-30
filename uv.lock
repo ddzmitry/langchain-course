@@ -14,6 +14,7 @@ members = [
     "doc-helper",
     "langchain-course",
     "langgraph-react",
+    "langgraph-reflection-agent",
 ]
 
 [[package]]
@@ -2453,6 +2454,29 @@ wheels = [
 name = "langgraph-react"
 version = "0.1.0"
 source = { virtual = "langgraph_react" }
+dependencies = [
+    { name = "certifi" },
+    { name = "langchain-course" },
+    { name = "langchain-tavily" },
+    { name = "langgraph-cli", extra = ["inmem"] },
+    { name = "pandas" },
+    { name = "rich" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "certifi", specifier = ">=2025.11.12" },
+    { name = "langchain-course", virtual = "." },
+    { name = "langchain-tavily", specifier = ">=0.2.15" },
+    { name = "langgraph-cli", extras = ["inmem"], specifier = ">=0.4.11" },
+    { name = "pandas", specifier = ">=2.3.3" },
+    { name = "rich", specifier = ">=14.2.0" },
+]
+
+[[package]]
+name = "langgraph-reflection-agent"
+version = "0.1.0"
+source = { virtual = "langgraph_reflection_agent" }
 dependencies = [
     { name = "certifi" },
     { name = "langchain-course" },

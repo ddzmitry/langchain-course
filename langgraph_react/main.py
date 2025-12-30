@@ -37,7 +37,7 @@ flow.add_edge(ACT, AGENT_REASON)
 # Compile the flow into an executable app
 app = flow.compile()
 # Draw the flow diagram to a PNG file
-app.get_graph().draw_mermaid_png(output_file_path="flow.png")
+app.get_graph().draw_mermaid_png(output_file_path="./app/flow.png")
 # Run the app with a sample input
 if __name__ == "__main__":
     print("Hello ReAct LangGraph with Function Calling")
