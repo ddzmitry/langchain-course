@@ -47,4 +47,5 @@ members = [
     "langgraph_react",
     "langgraph_reflection_agent",
     "langgraph_reflexion_agent",
+    "langraph_rag_agent",
 ]

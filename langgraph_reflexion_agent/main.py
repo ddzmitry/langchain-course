@@ -40,21 +40,21 @@ builder.add_edge("execute_tools", "revise")
 builder.add_conditional_edges("revise", event_loop, ["execute_tools", END])
 graph = builder.compile()
 
-print(graph.get_graph().draw_mermaid())
+# print(graph.get_graph().draw_mermaid())
 
 
-res = graph.invoke(
-    {
-        "messages": [
-            {
-                "role": "user",
-                "content": "Write about AI-Powered SOC / autonomous soc problem domain, list startups that do that and raised capital.",
-            }
-        ]
-    }
-)
-# Extract the final answer from the last message with tool calls
-last_message = res["messages"][-1]
-if isinstance(last_message, AIMessage) and last_message.tool_calls:
-    print(last_message.tool_calls[0]["args"]["answer"])
-print(res)
+# res = graph.invoke(
+#     {
+#         "messages": [
+#             {
+#                 "role": "user",
+#                 "content": "Write about AI-Powered SOC / autonomous soc problem domain, list startups that do that and raised capital.",
+#             }
+#         ]
+#     }
+# )
+# # Extract the final answer from the last message with tool calls
+# last_message = res["messages"][-1]
+# if isinstance(last_message, AIMessage) and last_message.tool_calls:
+#     print(last_message.tool_calls[0]["args"]["answer"])
+# print(res)
